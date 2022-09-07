@@ -7,7 +7,7 @@ public class MyThirdPersonController : ThirdPersonController
 {
     [SerializeField]
     private float rotationSpeedToward = 50;
-    
+
     private bool isMovingToward;
     private Quaternion targetRotation;
     private Vector3 targetDirection;
@@ -33,7 +33,7 @@ public class MyThirdPersonController : ThirdPersonController
 
     protected new void Update()
     {
-        if(_input.move!= Vector2.zero || hasReachedTarget())
+        if (_input.move != Vector2.zero || hasReachedTarget())
         {
             isMovingToward = false;
         }
@@ -53,6 +53,7 @@ public class MyThirdPersonController : ThirdPersonController
         Move(moveDirection);
         _animator.SetFloat(_animIDSpeed, targetSpeed);
     }
+
     private bool hasReachedTarget()
     {
         Vector3 currPos = transform.position;

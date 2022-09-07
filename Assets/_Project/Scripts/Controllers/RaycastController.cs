@@ -15,22 +15,19 @@ public class RaycastController : MonoBehaviour
     public Action<RaycastHit> OnEquipmentClick;
     public Action<RaycastHit> OnFloorClick;
 
-    private void Update()
+
+    public void RaycastOnClick(Vector2 pos)
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        Ray ray = Camera.main.ScreenPointToRay(pos);
+
+        if (Physics.Raycast(ray, out RaycastHit equipmentHitInfo, raycastDistance, LayerMask.GetMask(equipmentLayerMask)))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            OnEquipmentClick?.Invoke(equipmentHitInfo);
+        }
 
-            if (Physics.Raycast(ray, out RaycastHit equipmentHitInfo, raycastDistance, LayerMask.GetMask(equipmentLayerMask)))
-            {
-                OnEquipmentClick?.Invoke(equipmentHitInfo);
-            }
-
-            if (Physics.Raycast(ray, out RaycastHit floorHitInfo, raycastDistance, LayerMask.GetMask(floorLayerMask)))
-            {
-                OnFloorClick?.Invoke(floorHitInfo);
-            }
+        if (Physics.Raycast(ray, out RaycastHit floorHitInfo, raycastDistance, LayerMask.GetMask(floorLayerMask)))
+        {
+            OnFloorClick?.Invoke(floorHitInfo);
         }
     }
-
 }
